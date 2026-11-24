@@ -1,0 +1,67 @@
+{
+  "name": "shopshift",
+  "version": "0.1.0",
+  "description": "Multiple stores. One workspace. A local-first workspace manager for Shopify developers, built on top of the official Shopify CLI.",
+  "keywords": [
+    "shopify",
+    "shopify-cli",
+    "shopify-theme",
+    "theme-development",
+    "workspace",
+    "multi-store",
+    "agency",
+    "cli",
+    "developer-tools"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "shopshift": "dist/bin.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "npm run clean && tsc -p tsconfig.build.json && node scripts/postbuild.mjs",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "test": "npm run build && vitest run",
+    "test:unit": "vitest run test/unit",
+    "test:watch": "vitest",
+    "coverage": "npm run build && vitest run --coverage",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run test:pack",
+    "test:pack": "node scripts/verify-pack.mjs",
+    "prepublishOnly": "npm run verify"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.9.0",
+    "commander": "^15.1.0",
+    "smol-toml": "^1.9.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.8",
+    "@types/node": "^22.20.5",
+    "@vitest/coverage-v8": "^5.1.1",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1"
+  }
+}
