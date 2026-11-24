@@ -14,6 +14,15 @@
     "developer-tools"
   ],
   "license": "MIT",
+  "author": "Aliasgar Sogiawala",
+  "homepage": "https://github.com/aliasgarsogiawala/shopshift#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aliasgarsogiawala/shopshift.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aliasgarsogiawala/shopshift/issues"
+  },
   "type": "module",
   "bin": {
     "shopshift": "dist/bin.js"

@@ -6,7 +6,7 @@ All notable changes to ShopShift are documented here. The format follows
 
 ## [Unreleased]
 
-## [0.1.0] - Unreleased
+## [0.1.0] - 2026-11-24
 
 First release.
 

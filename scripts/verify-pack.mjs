@@ -15,6 +15,13 @@ const npm = windows ? 'npm.cmd' : 'npm';
 const root = realpathSync.native(mkdtempSync(path.join(tmpdir(), 'shopshift-pack-')));
 let failures = 0;
 
+// When this runs from an npm script (prepublishOnly during `npm publish --dry-run`, for example), the
+// parent npm passes its settings down as npm_config_* variables. Inheriting dry-run would make the
+// nested pack and install do nothing, so nested npm calls get only their own settings and .npmrc.
+const npmEnv = Object.fromEntries(
+  Object.entries(process.env).filter(([name]) => !/^npm_(config|lifecycle|package)_/i.test(name)),
+);
+
 function check(label, condition, detail = '') {
   console.log(`${condition ? '✓' : '✗'} ${label}${!condition && detail ? `\n    ${detail}` : ''}`);
   if (!condition) failures++;
@@ -26,6 +33,7 @@ try {
     execFileSync(npm, ['pack', '--json', '--pack-destination', root], {
       cwd: project,
       encoding: 'utf8',
+      env: npmEnv,
       shell: windows,
     }),
   );
@@ -71,6 +79,7 @@ try {
     ],
     {
       stdio: 'inherit',
+      env: npmEnv,
       shell: windows,
     },
   );
